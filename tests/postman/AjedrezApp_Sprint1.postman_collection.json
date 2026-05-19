@@ -1,0 +1,123 @@
+{
+    "info": {
+        "name": "Ajedrez App - Sprint 1",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "1. Register - Success",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "url": "{{base_url}}/api/v1/auth/register",
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"email\": \"test@ajedrez.com\",\n  \"username\": \"GranMaestro\",\n  \"password\": \"Test1234!\"\n}"
+                }
+            }
+        },
+        {
+            "name": "2. Register - Duplicate Email (409)",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "url": "{{base_url}}/api/v1/auth/register",
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"email\": \"test@ajedrez.com\",\n  \"username\": \"Otro\",\n  \"password\": \"Test1234!\"\n}"
+                }
+            }
+        },
+        {
+            "name": "3. Register - Invalid Data (400)",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "url": "{{base_url}}/api/v1/auth/register",
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"email\": \"no-es-email\",\n  \"username\": \"ab\",\n  \"password\": \"123\"\n}"
+                }
+            }
+        },
+        {
+            "name": "4. Login - Success",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "url": "{{base_url}}/api/v1/auth/login",
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"email\": \"test@ajedrez.com\",\n  \"password\": \"Test1234!\"\n}"
+                }
+            }
+        },
+        {
+            "name": "5. Login - Wrong Password (401)",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "url": "{{base_url}}/api/v1/auth/login",
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"email\": \"test@ajedrez.com\",\n  \"password\": \"WrongPass!\"\n}"
+                }
+            }
+        },
+        {
+            "name": "6. Get /me - With Token (200)",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{jwt_token}}"
+                    }
+                ],
+                "url": "{{base_url}}/api/v1/auth/me"
+            }
+        },
+        {
+            "name": "7. Get /me - No Token (401)",
+            "request": {
+                "method": "GET",
+                "url": "{{base_url}}/api/v1/auth/me"
+            }
+        }
+    ],
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://localhost:8080"
+        },
+        {
+            "key": "jwt_token",
+            "value": ""
+        }
+    ]
+}
